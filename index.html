@@ -1,0 +1,80 @@
+<!doctype>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Comatible" content="ie=edge">
+        <link rel="stylesheet" href="CSS/indexCss.css">
+        <link rel="stylesheet" href="CSS/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Learno (Learning Kids)</title>
+    </head>
+    
+    
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-custom navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" id="logo" href="#">Learno</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link active home fontsi" aria-current="page" href="index.html">Home</a>
+                            </li>
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link game fontsi" href="JS-game.html">Game</a>
+                            </li>
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link contact fontsi" href="#">Contact</a>
+                            </li>
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link about fontsi" href="#">About</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <section id="cover">
+            <div class="container">
+                <div class="welcomeText">
+                    <h1>WELCOME KIDS</h1>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                     <input type="number"  placeholder="Enter the number of letters" id="userLetter">
+                </div>
+			     <div class="row">  
+			         <button type=submit id="uButton">OK</button>
+			     </div>
+                 <div class="row">
+			         <div id="generatedButtons">
+			         </div>
+                 </div>
+                 <div class="row" >
+                     <div  class="text-center">
+			             <img id="letterImg" class="rounded">
+                     </div>
+                 </div>
+                
+            </div>
+        </section>
+        
+        
+        <script src="cc.js"></script>
+        <script src="JS/bootstrap.bundle.min.js"></script>
+        <script src="JS/bootstrap.min.js"></script>
+    </body>
+    
+</html>

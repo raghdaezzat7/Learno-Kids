@@ -1,0 +1,277 @@
+<!doctype>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Comatible" content="ie=edge">
+        <link rel="stylesheet" href="CSS/gameCss.css">
+        <link rel="stylesheet" href="CSS/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Learno Game</title>
+    </head>
+    
+    
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-custom navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" id="logo" href="#">Learno</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link  home fontsi" aria-current="page" href="index.html">Home</a>
+                            </li>
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link active game fontsi" href="JS-game.html">Game</a>
+                            </li>
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link contact fontsi" href="#">Contact</a>
+                            </li>
+                            <li class="navbar-custom nav-item">
+                                <a class="navbar-brand nav-link about fontsi" href="#">About</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <section class="col-10 qu_box">
+            <div class="container">
+                <div class="row qestionsheader">
+                    <span class="col-6">Score : <span id="score"></span>0</span>
+                    <span class="col-6" id="timer"> 0</span>
+                </div>
+                <div class=" col-10 start">
+                    <button class="col-8 startBut" id="startButton">Start</button>
+                </div>
+
+                <div class=" questions_body" id="beganing" style="display: none">
+                    <div class="row qu_text">
+                        <h3 id="qu">what is this </h3>
+                    </div>
+                    <div class="qu_answers" id="anwersOfQu">
+                        <div class="row input_label" id="1" onclick="checkScore(id)">
+                            <!--<input type="radio" id="1" name="qanswer">-->
+                        
+                        </div>
+                        <div class="row input_label" id="2" onclick="checkScore(id)">
+                            <!--<input type="radio" id="2" name="qanswer">-->
+            
+                        </div>
+                        <div class="row input_label" id="3" onclick="checkScore(id)">
+                            <!--<input type="radio" id="3" name="qanswer">-->
+                        
+                        </div>
+                        <div class="row input_label" id="4" onclick="checkScore(id)">
+                            <!--<input type="radio" id="4" name="qanswer">-->
+                        
+                        </div>
+
+                        </div>
+                    
+                        <div class="col-12 next" id="next_qu">
+                            <button class="col-10 nebut" id="nextButton">Next</button>
+                        </div>
+                </div>
+                
+                <div class="row" id="veiwScore" style="display:none;"></div>
+                
+                <div class="col-10 agin" id="agin_qus" >
+                    <button class="col-8 aginButt" id="aginButton" style="display:none;">Agin</button>
+                </div>
+        
+            </div>
+        </section>
+        
+        
+        <!--questions of the game-->
+        <script>
+            var questions=[
+                ["(A) for ?","Apple","Orange",
+                "Watermelon","Banana"],
+                ["(C) for ?","Dog","Cat","Mouse","Fish"],
+                ["(S) for ?","India","Egypt","Sudan","Russia"],
+                ["(P) for ?","Car","Ball","Hen","Pen"],
+                ["(R) for ?","Rabbit","Caw","Lion","Frog"],
+                ["What is the first letter of word (Frog) ?","T","F","C","S"],
+                ["What is the first letter of word (Pear) ?","S","H","P","Q"],
+                ["What is the first letter of word (Igloo) ?","L","V","A","I"],
+                ["What is the first letter of word (Nest) ?","N","W","Z","G"],
+                ["What is the first letter of word (Yarn) ?","M","Y","X","D"]
+            ];
+
+            var timer=document.getElementById("timer")
+            var score=document.getElementById("score");
+            var start=document.getElementById("startButton");
+            var ques=document.getElementById("qu");
+            var answer1=document.getElementById("1");
+            var answer2=document.getElementById("2");
+            var answer3=document.getElementById("3");
+            var answer4=document.getElementById("4");
+            var beganing=document.getElementById("beganing");
+            var next =document.getElementById("nextButton");
+            var veiw=document.getElementById("veiwScore");
+            var scoreCounter=0;
+            var agin =document.getElementById("aginButton");
+            var anwersOfQu =document.getElementById("anwersOfQu");
+
+
+
+            start.addEventListener("click",start_qize);
+            agin.addEventListener("click",start_qize);
+            next.addEventListener("click",next_question);
+
+            var interval;
+            function start_qize() {
+                start.style.display="none";
+                agin.style.display="none";
+                veiw.style.display="none";
+                scoreCounter=0;
+                anwersOfQu.style.pointerEvents = "auto";
+                display_Questions();
+                beganing.style.display="block";
+                //display_Questions();
+                start_timer();
+            }
+
+
+            //display questions
+            var index_qu=0;
+            var index_ans=1;
+            var ques_conuter=0;
+            var i=0;
+            function display_Questions() {
+                
+                document.getElementById(index_ans).style.backgroundColor = "#dbe3c9";
+                if(index_qu<=9){
+                    ques.innerHTML=questions[index_qu][0];
+                    if(index_ans<=4){
+                        answer1.innerHTML=questions[index_qu][index_ans];
+                        document.getElementById(index_ans).style.backgroundColor = "#dbe3c9";
+                        index_ans++;
+                        answer2.innerHTML=questions[index_qu][index_ans];
+                        document.getElementById(index_ans).style.backgroundColor = "#dbe3c9";
+                        index_ans++;
+                        answer3.innerHTML=questions[index_qu][index_ans];
+                        document.getElementById(index_ans).style.backgroundColor = "#dbe3c9";
+                        index_ans++;
+                        answer4.innerHTML=questions[index_qu][index_ans];
+                        document.getElementById(index_ans).style.backgroundColor = "#dbe3c9";
+                        index_ans++;
+                    }
+                    index_qu++;
+                    ques_conuter++;
+                    index_ans=1;
+                }
+                else{
+                    clearInterval(interval);
+                    veiwing_Score();
+                }
+            }
+
+            //
+            //Timer
+            function start_timer() {
+    
+                var f = new Date();
+                var count=0;
+                var mintes =30;
+                /*document.getElementById("starttime").innerHTML = "You started your Exam at " + f.getHours() + ":" + f.getMinutes();*/
+                //document.getElementById("starttime").innerHTML="0"+count+": 00";
+
+                 interval = setInterval(function(){
+                    if(mintes>0){
+                        timer.innerHTML="0"+count+":"+mintes;
+                         mintes--;
+                    }
+                    if (mintes == 0){
+                        if(count==0){
+                            clearInterval(interval);
+                            timer.innerHTML='Time Over';
+                            veiwing_Score();
+                            //checkAnswer();
+                        }
+                        else{
+                            /*count--;*/
+                            /*mintes=59;*/
+                            timer.innerHTML="0"+count+":"+mintes;
+                            mintes--;
+
+                        }
+                    }
+                }, 1000);
+            }
+
+            //display next question
+            function next_question() {
+                //checkScore(id);
+                anwersOfQu.style.pointerEvents = "auto";
+                display_Questions();
+            }
+
+            function veiwing_Score() {
+                beganing.style.display="none";
+                veiw.style.display="block";
+                veiw.innerHTML="<p >"+"YOUR SCORE IS : "+scoreCounter+"</p>";
+                agin.style.display="block";
+                index_qu=0;
+                index_ans=1;
+                ques_conuter=0;
+                i=0;
+                score.innerHTML="";
+            }
+            
+            
+            
+            
+            //checked the score
+            function checkScore (idans) {
+                /*document.querySelectorAll('.input_label').disabled = false;*/
+                if(ques_conuter<=4){
+                    if(ques_conuter ==idans){
+                         document.getElementById(idans).style.backgroundColor = "#0f0";
+                         scoreCounter+=100000;
+                         score.innerHTML=scoreCounter;
+                        /*answer2.style.pointerEvents = "none";*/
+                        anwersOfQu.style.pointerEvents = "none";
+                    }
+                    else
+                        document.getElementById(idans).style.backgroundColor = "#f00";
+                    anwersOfQu.style.pointerEvents = "none";
+                }
+                else if(ques_conuter <=8){
+                    if((ques_conuter-4)==idans){
+                        document.getElementById(idans).style.backgroundColor = "#0f0";
+                         scoreCounter+=100000;
+                         score.innerHTML=scoreCounter;
+                        anwersOfQu.style.pointerEvents = "none";
+                    }
+                    else
+                        document.getElementById(idans).style.backgroundColor = "#f00";
+                    anwersOfQu.style.pointerEvents = "none";
+                }
+                else if(ques_conuter <=10){
+                    if((ques_conuter-8)==idans){
+                        document.getElementById(idans).style.backgroundColor = "#0f0";
+                         scoreCounter+=100000;
+                         score.innerHTML=scoreCounter;
+                         anwersOfQu.style.pointerEvents = "none";
+                    }
+                    else
+                        document.getElementById(idans).style.backgroundColor = "#f00";
+                        anwersOfQu.style.pointerEvents = "none";
+                }
+                   
+            }
+        </script>
+        <script src="JS/bootstrap.bundle.min.js"></script>
+        <script src="JS/bootstrap.min.js"></script>
+    </body>
+</html>
